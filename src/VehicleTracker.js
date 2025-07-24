@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import "./index.css";
 
 export default function VehicleTracker() {
   const [vehicles, setVehicles] = useState([]);
@@ -80,7 +81,7 @@ export default function VehicleTracker() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Vehicle Inventory (Updated)</h1>
+      <h1 className="text-2xl font-bold mb-4">Vehicle Inventory Tracker</h1>
 
       <div className="mb-6 p-4 border rounded bg-gray-50">
         <h2 className="text-lg font-semibold mb-2">Add New Vehicle</h2>
