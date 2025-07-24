@@ -10,10 +10,12 @@ export default function VehicleTracker() {
     Color: "",
     DatePurchased: "",
     Location: "",
-    Status: ""
+    Notes: "",
+    Status: "",
+    Stages: ""
   });
 
-  const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxF1euVPkThRj3wpNJGoh-5637ngPEaNPmlig5111Hmg6JS09jFc0A31WNIIaiLetRO/exec";
+  const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxVXbI-wrk72FHunURmwXhPno1ob5Stysn64CaFcnI/exec";
 
   useEffect(() => {
     fetch(GOOGLE_SHEETS_API_URL)
@@ -42,6 +44,11 @@ export default function VehicleTracker() {
     setNewVehicle((prev) => ({ ...prev, [name]: value }));
   };
 
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    return isNaN(date) ? "" : `${date.getMonth() + 1}/${date.getDate()}/${date.getFullYear()}`;
+  };
+
   const handleSubmit = () => {
     fetch(GOOGLE_SHEETS_API_URL, {
       method: "POST",
@@ -56,7 +63,7 @@ export default function VehicleTracker() {
       })
       .then(() => {
         alert("Vehicle added successfully");
-        setNewVehicle({ VIN: "", MakeModelYear: "", Color: "", DatePurchased: "", Location: "", Status: "" });
+        setNewVehicle({ VIN: "", MakeModelYear: "", Color: "", DatePurchased: "", Location: "", Notes: "", Status: "", Stages: "" });
         return fetch(GOOGLE_SHEETS_API_URL);
       })
       .then((res) => res.json())
@@ -72,7 +79,7 @@ export default function VehicleTracker() {
 
   return (
     <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Vehicle Inventory</h1>
+      <h1 className="text-2xl font-bold mb-4">Vehicle Inventory (Updated)</h1>
 
       <div className="mb-6 p-4 border rounded bg-gray-50">
         <h2 className="text-lg font-semibold mb-2">Add New Vehicle</h2>
@@ -107,6 +114,8 @@ export default function VehicleTracker() {
             <th className="border p-2">Date Purchased</th>
             <th className="border p-2">Location</th>
             <th className="border p-2">Status</th>
+            <th className="border p-2">Notes</th>
+            <th className="border p-2">Stages</th>
           </tr>
         </thead>
         <tbody>
@@ -115,9 +124,11 @@ export default function VehicleTracker() {
               <td className="border p-2">{v.VIN}</td>
               <td className="border p-2">{v.MakeModelYear}</td>
               <td className="border p-2">{v.Color}</td>
-              <td className="border p-2">{v.DatePurchased}</td>
+              <td className="border p-2">{formatDate(v.DatePurchased)}</td>
               <td className="border p-2">{v.Location}</td>
               <td className="border p-2">{v.Status}</td>
+              <td className="border p-2">{v.Notes}</td>
+              <td className="border p-2">{v["Stages (JSON)"] || v.Stages || ""}</td>
             </tr>
           ))}
         </tbody>
