@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import "./index.css";
 
 export default function VehicleTracker() {
   const [vehicles, setVehicles] = useState([]);
@@ -15,7 +16,7 @@ export default function VehicleTracker() {
     Stages: ""
   });
 
-  const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbxVXbI-wrk72FHunURmwXhPno1ob5Stysn64CaFcnI/exec";
+  const GOOGLE_SHEETS_API_URL = "https://script.google.com/macros/s/AKfycbx9IrBMTf7KdsrtA6KHPHL74BoGypiHRiLLF0dCuzrr3cRz5Vu34vpBcULcIDtEMhTR/exec";
 
   useEffect(() => {
     fetch(GOOGLE_SHEETS_API_URL)
